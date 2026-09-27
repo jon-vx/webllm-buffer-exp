@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>webllm-buffer-exp</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      background: #111;
+      color: #eee;
+    }
+    body { margin: 0; }
+    main { width: min(560px, calc(100% - 32px)); margin: 48px auto; }
+    h1 { margin: 0 0 16px; font-size: 22px; }
+    p, label { font: 14px/1.6 system-ui, sans-serif; color: #aaa; }
+    p { margin: 12px 0; }
+    label { display: block; margin: 24px 0 16px; }
+    input {
+      box-sizing: border-box;
+      width: 100%;
+      margin-top: 6px;
+      padding: 10px;
+      border: 1px solid #777;
+      background: #111;
+      color: #eee;
+      font: inherit;
+    }
+    button {
+      margin: 4px 8px 4px 0;
+      padding: 10px 16px;
+      border: 1px solid #777;
+      border-radius: 2px;
+      background: #eee;
+      color: #111;
+      font: inherit;
+      cursor: pointer;
+    }
+    button.secondary { padding: 8px 12px; background: transparent; color: #eee; font-size: 13px; }
+    button:disabled { opacity: .5; cursor: default; }
+    progress { width: 100%; margin: 8px 0; }
+    #status { color: #eee; }
+    footer { margin-top: 32px; font: 12px system-ui, sans-serif; }
+    a { color: #aaa; }
+    :focus-visible { outline: 2px solid #eee; outline-offset: 3px; }
+    [hidden] { display: none !important; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>WebLLM buffer experiment</h1>
+    <p>Run a browser performance test. It takes about 10 minutes and downloads roughly 200 MB on first use.</p>
+    <p>Keep this tab visible and avoid other GPU-heavy applications.</p>
+    <p id="data-note">The test records GPU/browser information, timings and output from a fixed prompt.</p>
+    <label>GPU model (optional)
+      <input id="device-label" type="text" maxlength="80" autocomplete="off" placeholder="If you know it">
+    </label>
+    <button id="go" disabled>Run test</button>
+    <button id="stop" class="secondary" hidden>Stop</button>
+    <p id="status" role="status" aria-live="polite">Loading…</p>
+    <progress id="progress" value="0" max="144" aria-label="Completed tests" hidden></progress>
+    <p id="upload-status" role="status" aria-live="polite"></p>
+    <button id="upload" hidden disabled>Retry upload</button>
+    <button id="download" class="secondary" hidden>Download results</button>
+    <footer><a href="README.md">About the test</a> · <a href="THIRD_PARTY_NOTICES.md">Runtime sources</a></footer>
+    <noscript>JavaScript and WebGPU are required.</noscript>
+  </main>
+  <script defer src="vendor/runtimes.js"></script>
+  <script defer src="runtime-policy.js"></script>
+  <script defer src="vendor/encoder-build.js"></script>
+  <script defer src="experiment.js"></script>
+  <script defer src="gpu-validation.js"></script>
+  <script defer src="app.js"></script>
+</body>
+</html>
